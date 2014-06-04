@@ -7,7 +7,7 @@ title_regex = re.compile(r'<title(\s+.*?)?>(.*?)</title>', flags=re.IGNORECASE|r
 class UrlPlugin(object):
     title = 'Url Plugin'
 
-    def get_url_title(user, message):
+    def get_url_title(bagbot, user, message):
         # Check if the message is a url.
         # Find every URL within the message.
         urls = re.findall(url_regex, message)
@@ -26,7 +26,7 @@ class UrlPlugin(object):
                         if len(title.group(2).strip()) > 0:
                             title = re.sub('\s+', ' ', title.group(2)).strip()
                         # Send the page title to the chat.
-                        print '> %s' % title
+                        bagbot.msg(bagbot.factory.channel, '%s' % title)
             except: pass
 
     commands = {

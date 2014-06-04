@@ -97,7 +97,7 @@ class BagBot(irc.IRCClient):
             # A command was found, lets send the message to the proper plugin.
             command = re.findall(self.command_regex, msg)
             c = command[0][1]
-            self.COMMANDS[c](user, msg)
+            self.COMMANDS[c](self, user.group(1), msg)
 
 
     def names(self, channel):
