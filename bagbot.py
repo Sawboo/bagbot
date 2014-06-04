@@ -1,7 +1,6 @@
 import sys
 import re
 import os
-import requests
 import imp
 from settings import HOST, PORT, CHANNEL, NICKNAME, REALNAME, PASSWORD, PLUGINS
 from twisted.words.protocols import irc
@@ -12,12 +11,6 @@ from twisted.internet import task
 from twisted.python import log
 
 path = os.path.dirname(os.path.realpath(sys.argv[0])) + '\plugins'
-
-# for (path, dirs, files) in os.walk(path):
-#     filelist = glob.glob(path + '\\plugin.py')
-#     for f in filelist:
-#         print f
-
 
 log.startLogging(sys.stdout)
 
