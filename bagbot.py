@@ -35,10 +35,7 @@ class BagBot(irc.IRCClient):
     plugins = []
 
     def getPlugins(self):
-        """
-        Find all plugin modules from the ./plugins and add them to [plugins]
-
-        """
+        """ Find all plugin modules from ./plugins """
         plugins = []
         possibleplugins = os.listdir('./plugins')
         for i in possibleplugins:
@@ -68,10 +65,10 @@ class BagBot(irc.IRCClient):
                 self.COMMANDS[c] = p.commands[c]
 
     def joined(self, channel):
-        """This is called when connecting to a channel."""
+        """ This is called when connecting to a channel. """
         log.msg("> %s has joined %s" % (self.nickname, self.factory.channel))
         # Let's see who is connected to the chat currently.
-        # self.names(self.factory.channel).addCallback(self.got_names)
+        self.names(self.factory.channel).addCallback(self.got_names)
 
 
     def privmsg(self, user, channel, msg):
@@ -108,7 +105,7 @@ class BagBot(irc.IRCClient):
             self._namescallback[channel] = ([], [])
 
         self._namescallback[channel][0].append(d)
-        self.sendLine("NAMES %s" % channel)
+        log.msg("/NAMES %s" % channel)
         return d
 
     def irc_RPL_NAMREPLY(self, prefix, params):
@@ -124,7 +121,7 @@ class BagBot(irc.IRCClient):
         n += nicklist
 
     def irc_RPL_ENDOFNAMES(self, prefix, params):
-        """This method is called after running the /NAMES command."""
+        """ This method is called after running the /NAMES command. """
         channel = params[1].lower()
         if channel not in self._namescallback:
             return
@@ -136,9 +133,9 @@ class BagBot(irc.IRCClient):
 
 
     def got_names(self, nicklist):
-        """This is just some bullshit"""
+        """ This is just some bullshit. """
         log.msg(nicklist)
-        f = open('viewers.txt', 'r+')
+        f = open('viewers.txt', 'w')
         f.seek(0)
         for i in nicklist:
             f.write(i + '\n')
